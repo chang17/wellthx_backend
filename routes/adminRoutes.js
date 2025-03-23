@@ -8,5 +8,7 @@ const roleMiddleware = require('../middleware/roleMiddleware'); // Checks if the
 router.get('/users', authMiddleware, roleMiddleware('admin'), adminHandler.getAllUsers);
 router.patch('/users/:id/status', authMiddleware, roleMiddleware('admin'), adminHandler.updateUserStatus);
 router.get('/transactions', authMiddleware, roleMiddleware('admin'), adminHandler.getAllTransactions);
+router.get('/deposits', authMiddleware, roleMiddleware('admin'), adminHandler.getPendingDeposits);
+router.post("/transfer", adminHandler.transferUSDT);
 
 module.exports = router;

@@ -29,4 +29,27 @@ const getAllTransactions = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, updateUserStatus, getAllTransactions };
+const getPendingDeposits = async (req, res) => {
+    try {
+        const transactions = await adminService.getPendingDeposits();
+        return res.json({ success: true, transactions });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+
+const transferUSDT = async (req, res) => {
+    try {
+        const { transaction_id } = req.body;
+        const result = await adminService.processDeposit(transaction_id);
+        return res.json({ success: true, message: "Transfer successful", result });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+
+
+module.exports = { getAllUsers, updateUserStatus, getAllTransactions, getPendingDeposits, transferUSDT };
